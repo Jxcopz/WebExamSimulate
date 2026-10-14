@@ -6,421 +6,539 @@
     <title>ข้อสอบปลายภาคจำลอง วิชา 748-321 Client-Side Web Development</title>
     <style>
         body {
-            font-family: 'Sarabun', 'Segoe UI', Tahoma, sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
+            font-family: 'Sarabun', 'TH Sarabun New', 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f4f6f9;
+            color: #222;
             margin: 0;
-            padding: 20px;
+            padding: 25px 15px;
+            line-height: 1.5;
         }
-        .exam-paper {
-            max-width: 900px;
+        .exam-container {
+            max-width: 880px;
             margin: 0 auto;
-            background: #fff;
+            background: #ffffff;
             padding: 40px 50px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-radius: 8px;
+            border-radius: 4px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            border: 1px solid #dcdcdc;
         }
-        .header {
+        .exam-header {
             text-align: center;
-            border-bottom: 2px solid #333;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            border-bottom: 2px solid #222;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
         }
-        .header h2, .header h3 {
-            margin: 5px 0;
+        .exam-header h3 {
+            margin: 0 0 6px 0;
+            font-size: 18px;
+            font-weight: bold;
         }
-        .student-info {
+        .exam-header h2 {
+            margin: 0 0 6px 0;
+            font-size: 21px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+        .exam-header .meta-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+        .student-bar {
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
             font-size: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
         }
-        .instructions {
-            background-color: #e8f4fd;
-            border-left: 4px solid #1976d2;
-            padding: 12px 15px;
-            margin-bottom: 30px;
+        .instruction-box {
+            background-color: #f8fafc;
+            border-left: 4px solid #2b6cb0;
+            padding: 12px 18px;
+            margin-bottom: 25px;
             font-size: 14px;
             line-height: 1.6;
         }
-        .question-card {
+        .question-item {
             margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px dashed #ccc;
+            padding-bottom: 22px;
+            border-bottom: 1px dashed #cfd8dc;
         }
         .question-title {
             font-weight: bold;
-            font-size: 16px;
-            margin-bottom: 8px;
-            color: #1a202c;
+            font-size: 15.5px;
+            margin-bottom: 6px;
+            color: #111;
         }
-        .question-desc {
-            font-size: 15px;
-            margin-bottom: 12px;
-            color: #4a5568;
-        }
-        .code-block {
-            background-color: #2d3748;
-            color: #f7fafc;
-            padding: 12px 16px;
-            border-radius: 6px;
-            font-family: 'Courier New', Courier, monospace;
+        .question-sub {
             font-size: 14px;
-            overflow-x: auto;
-            margin: 10px 0;
-            white-space: pre;
+            color: #555;
+            margin-bottom: 10px;
         }
-        .answer-area {
+        .code-snippet {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13.5px;
+            margin: 8px 0 12px 0;
+            white-space: pre-wrap;
+        }
+        .answer-input {
             width: 100%;
             box-sizing: border-box;
             font-family: inherit;
             font-size: 14px;
             padding: 10px;
-            border: 1.5px solid #cbd5e0;
-            border-radius: 6px;
-            min-height: 85px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 4px;
+            min-height: 75px;
             resize: vertical;
         }
-        .answer-area:focus {
+        .answer-input:focus {
             outline: none;
             border-color: #3182ce;
-            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
+            box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
         }
-        .btn-submit {
+        .btn-submit-item {
             margin-top: 10px;
             background-color: #2b6cb0;
-            color: white;
+            color: #fff;
             border: none;
-            padding: 9px 20px;
+            padding: 8px 20px;
             font-size: 14px;
-            font-weight: 600;
-            border-radius: 5px;
+            font-weight: bold;
+            border-radius: 4px;
             cursor: pointer;
-            transition: 0.2s;
+            transition: background 0.2s;
         }
-        .btn-submit:hover {
-            background-color: #2c5282;
+        .btn-submit-item:hover {
+            background-color: #1a4971;
         }
-        .feedback-box {
+        .result-box {
             display: none;
-            margin-top: 15px;
-            padding: 15px 18px;
-            border-radius: 6px;
+            margin-top: 14px;
+            padding: 14px 18px;
+            border-radius: 4px;
             font-size: 14.5px;
             line-height: 1.6;
         }
-        /* สถานะเฉลย 3 สี */
-        .status-correct {
+        /* 3 สีตามเกณฑ์ประเมิน */
+        .color-correct {
             display: block !important;
-            background-color: #e6fffa !important;
-            border: 1.5px solid #38a169 !important;
-            color: #22543d !important;
+            background-color: #f0fdf4 !important;
+            border: 1.5px solid #22c55e !important;
+            color: #15803d !important;
         }
-        .status-partial {
+        .color-partial {
             display: block !important;
-            background-color: #fffaf0 !important;
-            border: 1.5px solid #d69e2e !important;
-            color: #744210 !important;
+            background-color: #fefce8 !important;
+            border: 1.5px solid #eab308 !important;
+            color: #854d0e !important;
         }
-        .status-incorrect {
+        .color-incorrect {
             display: block !important;
-            background-color: #fff5f5 !important;
-            border: 1.5px solid #e53e3e !important;
-            color: #742a2a !important;
+            background-color: #fef2f2 !important;
+            border: 1.5px solid #ef4444 !important;
+            color: #b91c1c !important;
         }
-        .status-badge {
+        .badge {
             display: inline-block;
             font-weight: bold;
-            padding: 3px 8px;
-            border-radius: 4px;
-            margin-bottom: 8px;
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin-bottom: 6px;
             font-size: 13px;
+            color: #fff;
         }
-        .status-correct .status-badge { background-color: #38a169; color: white; }
-        .status-partial .status-badge { background-color: #d69e2e; color: white; }
-        .status-incorrect .status-badge { background-color: #e53e3e; color: white; }
-        .explanation {
-            margin-top: 10px;
-            padding-top: 8px;
+        .color-correct .badge { background-color: #16a34a; }
+        .color-partial .badge { background-color: #ca8a04; }
+        .color-incorrect .badge { background-color: #dc2626; }
+        .solution-text {
+            color: #1f2937;
+            margin-top: 4px;
+        }
+        .note-text {
+            margin-top: 6px;
+            padding-top: 6px;
             border-top: 1px dashed rgba(0,0,0,0.15);
+            font-size: 13.5px;
+            color: #4b5563;
+        }
+        .footer-note {
+            text-align: center;
+            font-size: 13px;
+            color: #888;
+            margin-top: 25px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
         }
     </style>
 </head>
 <body>
 
-<div class="exam-paper">
-    <div class="header">
+<div class="exam-container">
+    <div class="exam-header">
         <h3>ภาควิชาคณิตศาสตร์และวิทยาการคอมพิวเตอร์ คณะวิทยาศาสตร์และเทคโนโลยี</h3>
         <h2>ข้อสอบปลายภาคจำลอง รายวิชา 748-321 Client-Side Web Development</h2>
-        <p>ภาคการศึกษาที่ 2 | เวลา 09.00 - 12.00 น.</p>
+        <div class="meta-info">
+            <span>ภาคการศึกษาที่ 2</span>
+            <span>เวลา 09.00 - 12.00 น.</span>
+        </div>
     </div>
 
-    <div class="student-info">
+    <div class="student-bar">
         <div><strong>ชื่อ-สกุล:</strong> ....................................................</div>
         <div><strong>รหัสนักศึกษา:</strong> ..............................</div>
         <div><strong>กลุ่มที่:</strong> ...........</div>
     </div>
 
-    <div class="instructions">
-        <strong>คำชี้แจง:</strong> ให้พิมพ์คำตอบลงในช่องว่างใต้แต่ละข้อแล้วกดปุ่ม <strong>"ส่งคำตอบ"</strong><br>
-        ระบบจะประเมินผลคำตอบอัตโนมัติ: 
-        <span style="color:#22543d; font-weight:bold;">[สีเขียว = ถูกต้องสมบูรณ์]</span>, 
-        <span style="color:#b7791f; font-weight:bold;">[สีเหลือง = คำตอบเข้าโครง/เกือบถูกต้อง]</span>, 
-        <span style="color:#c53030; font-weight:bold;">[สีแดง = คำตอบไม่ถูกต้องหรือไม่ตรงประเด็น]</span>
+    <div class="instruction-box">
+        <strong>คำชี้แจง:</strong> แบบทดสอบจำลองชุดนี้อ้างอิงเนื้อหาจาก <em>FinalExam_CheatSheet_Guide.pdf</em> และจัดรูปแบบข้อสอบตามแบบฟอร์ม <em>midterm_edit.pdf</em><br>
+        ให้นักศึกษาพิมพ์คำตอบลงในช่องว่างใต้คำถามแต่ละข้อแล้วกดปุ่ม <strong>"ส่งคำตอบ"</strong> ระบบจะประเมินผลคำตอบพร้อมแสดงเฉลยทันที:<br>
+        • <span style="color:#15803d; font-weight:bold;">[สีเขียว = ถูกต้องสมบูรณ์]</span>: ตอบครบถ้วนตามหลักการทุกประเด็น<br>
+        • <span style="color:#854d0e; font-weight:bold;">[สีเหลือง = คำตอบเข้าโครงหรือเกือบถูก]</span>: ตอบถูกหรือมีคีย์เวิร์ดที่เข้าโครงแม้เพียงเล็กน้อย<br>
+        • <span style="color:#b91c1c; font-weight:bold;">[สีแดง = คำตอบไม่ถูกต้อง]</span>: ไม่ตรงประเด็นหรือไม่ได้กรอกข้อมูล
     </div>
 
     <!-- ข้อ 1 -->
-    <div class="question-card" id="q1">
-        <div class="question-title">1. จงเปรียบเทียบความแตกต่างระหว่าง element.innerHTML, element.innerText และ document.write() พร้อมระบุข้อควรระวังสำคัญของ document.write() ตามแนวทาง W3Schools (4 คะแนน)</div>
-        <div class="question-desc">ให้อธิบายจุดประสงค์การทำงานของแต่ละคำสั่ง และผลกระทบหากเรียกใช้ document.write() หลังหน้าเว็บโหลดเสร็จสมบูรณ์</div>
-        <textarea class="answer-area" id="ans1" placeholder="พิมพ์คำตอบข้อ 1 ที่นี่..."></textarea><br>
-        <button type="button" class="btn-submit" id="btn1">ส่งคำตอบ</button>
-        <div class="feedback-box" id="fb1"></div>
+    <div class="question-item">
+        <div class="question-title">1. จงเปรียบเทียบการทำงานของ JavaScript Output ระหว่าง element.innerHTML, element.innerText และ document.write() พร้อมระบุข้อควรระวังสำคัญของ document.write() ที่ชอบออกสอบ (4 คะแนน)</div>
+        <div class="question-sub">ให้อธิบายจุดประสงค์การทำงานของแต่ละคำสั่ง และผลกระทบหากเรียก document.write() ภายหลังจากที่หน้าเว็บโหลดเสร็จสมบูรณ์</div>
+        <textarea class="answer-input" id="q1" placeholder="พิมพ์คำตอบข้อ 1 ที่นี่..."></textarea><br>
+        <button type="button" class="btn-submit-item" onclick="checkQ1()">ส่งคำตอบ</button>
+        <div class="result-box" id="res1"></div>
     </div>
 
     <!-- ข้อ 2 -->
-    <div class="question-card" id="q2">
-        <div class="question-title">2. จากตารางจับคู่ Syntax ระหว่าง Vanilla JavaScript กับ jQuery จงแปลงคำสั่งต่อไปนี้ให้อยู่ในรูป jQuery Library (3 คะแนน)</div>
-        <div class="code-block">a) document.getElementById("header").innerHTML = "&lt;h1&gt;Welcome&lt;/h1&gt;";
-b) document.querySelector(".box").style.display = "none";
-c) document.getElementById("btnSubmit").addEventListener("click", doSubmit);</div>
-        <textarea class="answer-area" id="ans2" placeholder="พิมพ์คำตอบข้อ 2 เช่น a) ... b) ... c) ..."></textarea><br>
-        <button type="button" class="btn-submit" id="btn2">ส่งคำตอบ</button>
-        <div class="feedback-box" id="fb2"></div>
+    <div class="question-item">
+        <div class="question-title">2. จากตารางจับคู่ Syntax ของ Vanilla JavaScript เทียบกับ jQuery จงแปลงคำสั่งทั้ง 3 ข้อต่อไปนี้ให้อยู่ในรูป jQuery Library (3 คะแนน)</div>
+        <div class="code-snippet">a) document.getElementById("demo").innerHTML = "&lt;b&gt;Hi&lt;/b&gt;";
+b) elem.style.color = "red";
+c) elem.addEventListener("click", fn);</div>
+        <textarea class="answer-input" id="q2" placeholder="พิมพ์คำตอบข้อ 2 เช่น a) ... b) ... c) ..."></textarea><br>
+        <button type="button" class="btn-submit-item" onclick="checkQ2()">ส่งคำตอบ</button>
+        <div class="result-box" id="res2"></div>
     </div>
 
     <!-- ข้อ 3 -->
-    <div class="question-card" id="q3">
-        <div class="question-title">3. จงเปรียบเทียบการประกาศตัวแปรด้วย var, let และ const ในประเด็นเรื่อง Scope, Reassign, Redeclare และ Hoisting (4 คะแนน)</div>
-        <div class="question-desc">ให้อธิบายความแตกต่างของ Scope และพฤติกรรม Hoisting / Temporal Dead Zone (TDZ) ให้ชัดเจน</div>
-        <textarea class="answer-area" id="ans3" placeholder="พิมพ์คำตอบข้อ 3 ที่นี่..."></textarea><br>
-        <button type="button" class="btn-submit" id="btn3">ส่งคำตอบ</button>
-        <div class="feedback-box" id="fb3"></div>
+    <div class="question-item">
+        <div class="question-title">3. จงเปรียบเทียบการประกาศตัวแปร var, let และ const ในประเด็น Scope, Reassign, Redeclare และ Hoisting (4 คะแนน)</div>
+        <div class="question-sub">ระบุความแตกต่างของ Function Scope กับ Block Scope รวมถึงสถานะ TDZ (Temporal Dead Zone)</div>
+        <textarea class="answer-input" id="q3" placeholder="พิมพ์คำตอบข้อ 3 ที่นี่..."></textarea><br>
+        <button type="button" class="btn-submit-item" onclick="checkQ3()">ส่งคำตอบ</button>
+        <div class="result-box" id="res3"></div>
     </div>
 
     <!-- ข้อ 4 -->
-    <div class="question-card" id="q4">
-        <div class="question-title">4. ตัวดำเนินการ == (Abstract Equality) และ === (Strict Equality) ใน JavaScript ทำงานต่างกันอย่างไร พร้อมยกตัวอย่างประกอบ (3 คะแนน)</div>
-        <textarea class="answer-area" id="ans4" placeholder="พิมพ์คำตอบข้อ 4 ที่นี่..."></textarea><br>
-        <button type="button" class="btn-submit" id="btn4">ส่งคำตอบ</button>
-        <div class="feedback-box" id="fb4"></div>
+    <div class="question-item">
+        <div class="question-title">4. จงอธิบายความแตกต่างระหว่างตัวดำเนินการ == (Abstract Equality) กับ === (Strict Equality) พร้อมยกตัวอย่างผลลัพธ์ของ 5 == "5" และ 5 === "5" (3 คะแนน)</div>
+        <textarea class="answer-input" id="q4" placeholder="พิมพ์คำตอบข้อ 4 ที่นี่..."></textarea><br>
+        <button type="button" class="btn-submit-item" onclick="checkQ4()">ส่งคำตอบ</button>
+        <div class="result-box" id="res4"></div>
     </div>
 
     <!-- ข้อ 5 -->
-    <div class="question-card" id="q5">
-        <div class="question-title">5. จงแปลงโค้ดโครงสร้าง For Loop ต่อไปนี้ ให้ทำงานแบบเดียวกันโดยใช้ While Loop (3 คะแนน)</div>
-        <div class="code-block">for (let i = 0; i &lt; 5; i++) {
+    <div class="question-item">
+        <div class="question-title">5. จงแปลงโครงสร้าง For Loop ต่อไปนี้ ให้ทำงานแบบเดียวกันโดยใช้ While Loop (3 คะแนน)</div>
+        <div class="code-snippet">for (let i = 0; i &lt; 5; i++) {
     console.log(i);
 }</div>
-        <textarea class="answer-area" id="ans5" placeholder="พิมพ์โค้ด While Loop ที่นี่..."></textarea><br>
-        <button type="button" class="btn-submit" id="btn5">ส่งคำตอบ</button>
-        <div class="feedback-box" id="fb5"></div>
+        <div class="question-sub">ต้องระบุตำแหน่ง Initializer, Condition และ Incrementor ให้ถูกต้องสัมพันธ์กัน</div>
+        <textarea class="answer-input" id="q5" placeholder="พิมพ์โค้ด While Loop ที่แปลงแล้วที่นี่..."></textarea><br>
+        <button type="button" class="btn-submit-item" onclick="checkQ5()">ส่งคำตอบ</button>
+        <div class="result-box" id="res5"></div>
     </div>
 
     <!-- ข้อ 6 -->
-    <div class="question-card" id="q6">
-        <div class="question-title">6. ในฟังก์ชัน JavaScript หากไม่มีคำสั่ง return หรือเรียก return; เปล่าๆ ฟังก์ชันจะส่งคืนค่า (Return value) ใด และการทำงานของ return ส่งผลต่อโฟลว์คำสั่งในฟังก์ชันอย่างไร (3 คะแนน)</div>
-        <textarea class="answer-area" id="ans6" placeholder="พิมพ์คำตอบข้อ 6 ที่นี่..."></textarea><br>
-        <button type="button" class="btn-submit" id="btn6">ส่งคำตอบ</button>
-        <div class="feedback-box" id="fb6"></div>
+    <div class="question-item">
+        <div class="question-title">6. ตามกระบวนการทำงานของฟังก์ชัน (Input -> Process -> Return Output) หากฟังก์ชันไม่มีคำสั่ง return หรือเรียกคำสั่ง return; เปล่าๆ จะเกิดผลลัพธ์อย่างไร และคำสั่ง return มีผลต่อการทำงานของโค้ดถัดไปในฟังก์ชันอย่างไร (3 คะแนน)</div>
+        <textarea class="answer-input" id="q6" placeholder="พิมพ์คำตอบข้อ 6 ที่นี่..."></textarea><br>
+        <button type="button" class="btn-submit-item" onclick="checkQ6()">ส่งคำตอบ</button>
+        <div class="result-box" id="res6"></div>
     </div>
 
     <!-- ข้อ 7 -->
-    <div class="question-card" id="q7">
-        <div class="question-title">7. จงเปรียบเทียบการทำงานของ Array Methods: splice() vs slice() และระบุข้อควรระวังของ Date.prototype.getMonth() (3 คะแนน)</div>
-        <textarea class="answer-area" id="ans7" placeholder="พิมพ์คำตอบข้อ 7 ที่นี่..."></textarea><br>
-        <button type="button" class="btn-submit" id="btn7">ส่งคำตอบ</button>
-        <div class="feedback-box" id="fb7"></div>
+    <div class="question-item">
+        <div class="question-title">7. จงเปรียบเทียบ Array Methods ระหว่าง splice() กับ slice() ในประเด็นการเปลี่ยนแปลงข้อมูลใน Array เดิม (Mutate) และระบุข้อควรระวังเรื่องค่าดัชนีของ getMonth() ใน Date Object (3 คะแนน)</div>
+        <textarea class="answer-input" id="q7" placeholder="พิมพ์คำตอบข้อ 7 ที่นี่..."></textarea><br>
+        <button type="button" class="btn-submit-item" onclick="checkQ7()">ส่งคำตอบ</button>
+        <div class="result-box" id="res7"></div>
     </div>
 
     <!-- ข้อ 8 -->
-    <div class="question-card" id="q8">
-        <div class="question-title">8. จงเขียนสูตรสุ่มตัวเลขจำนวนเต็มแบบรวมทั้งหัวและท้าย (Inclusive) ในช่วง min ถึง max ตามสูตรมาตรฐานของ W3Schools และเปรียบเทียบ JSON.parse() กับ JSON.stringify() (3 คะแนน)</div>
-        <textarea class="answer-area" id="ans8" placeholder="พิมพ์คำตอบข้อ 8 ที่นี่..."></textarea><br>
-        <button type="button" class="btn-submit" id="btn8">ส่งคำตอบ</button>
-        <div class="feedback-box" id="fb8"></div>
+    <div class="question-item">
+        <div class="question-title">8. จงเขียนสูตรการสุ่มตัวเลขจำนวนเต็มช่วง min ถึง max (รวมทั้งสองค่า) ตาม Cheat Sheet และเปรียบเทียบความแตกต่างระหว่าง JSON.parse() กับ JSON.stringify() (3 คะแนน)</div>
+        <textarea class="answer-input" id="q8" placeholder="พิมพ์คำตอบข้อ 8 ที่นี่..."></textarea><br>
+        <button type="button" class="btn-submit-item" onclick="checkQ8()">ส่งคำตอบ</button>
+        <div class="result-box" id="res8"></div>
+    </div>
+
+    <div class="footer-note">
+        ทุจริตการสอบจะถูกพิจารณาโทษสูงสุดตามระเบียบมหาวิทยาลัย
     </div>
 </div>
 
 <script>
-function renderFeedback(boxId, statusClass, badgeText, solutionHtml, explanationText) {
-    var box = document.getElementById(boxId);
-    box.className = 'feedback-box ' + statusClass;
-    box.innerHTML = '<span class="status-badge">' + badgeText + '</span><br>' +
-                    '<strong>เฉลยที่ถูกต้อง:</strong><br>' + solutionHtml +
-                    '<div class="explanation"><strong>คำอธิบายเพิ่มเติม:</strong> ' + explanationText + '</div>';
-    box.style.display = 'block';
+// ฟังก์ชันกลางสำหรับแสดงผลลัพธ์สี เขียว/เหลือง/แดง
+function displayResult(elementId, status, badgeText, solutionHtml, explanation) {
+    var target = document.getElementById(elementId);
+    target.className = 'result-box color-' + status;
+    target.innerHTML = '<span class="badge">' + badgeText + '</span><br>' +
+                       '<div class="solution-text"><strong>เฉลยที่ถูกต้อง:</strong><br>' + solutionHtml + '</div>' +
+                       '<div class="note-text"><strong>คำอธิบาย/อ้างอิง:</strong> ' + explanation + '</div>';
+    target.style.display = 'block';
 }
 
-// ข้อ 1
-document.getElementById('btn1').addEventListener('click', function() {
-    var val = (document.getElementById('ans1').value || '').toLowerCase().trim();
-    var hasHTML = val.includes('innerhtml') || val.includes('html') || val.includes('แท็ก');
-    var hasText = val.includes('innertext') || val.includes('text') || val.includes('ข้อความ');
-    var hasWarn = val.includes('ลบ') || val.includes('ทั้งหน้า') || val.includes('โหลดเสร็จ') || val.includes('overwrite');
-
-    var sol = '1. <strong>innerHTML:</strong> เขียนทับ/เรนเดอร์แท็ก HTML ภายในองค์ประกอบ<br>' +
-              '2. <strong>innerText:</strong> เขียนทับเฉพาะข้อความล้วน (Plain Text) ไม่ตีความแท็ก HTML<br>' +
-              '3. <strong>document.write():</strong> พ่นข้อมูลลงใน Document stream ขณะกำลังโหลด<br>' +
-              '<strong>ข้อควรระวัง:</strong> หากเรียกหลังหน้าเว็บโหลดเสร็จแล้ว จะ <strong>"ลบเนื้อหาเดิมทั้งหน้าทิ้งทั้งหมด"</strong>';
-    var exp = 'อ้างอิง W3Schools JS Output: document.write() หลังโหลดเสร็จจะเคลียร์ DOM ทั้งหมดทิ้ง';
-
-    if (hasHTML && hasText && hasWarn) {
-        renderFeedback('fb1', 'status-correct', '✓ ถูกต้องสมบูรณ์ (4/4 คะแนน)', sol, exp);
-    } else if (hasWarn || (hasHTML && hasText)) {
-        renderFeedback('fb1', 'status-partial', '⚠ คำตอบเข้าโครง/ได้คะแนนบางส่วน (2/4 คะแนน)', sol, exp);
-    } else {
-        renderFeedback('fb1', 'status-incorrect', '✗ คำตอบไม่ถูกต้อง (0/4 คะแนน)', sol, exp);
+// ข้อ 1: innerHTML, innerText, document.write()
+function checkQ1() {
+    var text = (document.getElementById('q1').value || '').toLowerCase().trim();
+    if (!text) {
+        displayResult('res1', 'incorrect', '✗ ไม่ถูกต้อง (0/4 คะแนน)', 
+            '1. <strong>innerHTML:</strong> แทนที่เนื้อหาที่มีแท็ก HTML มาร์กอัป (เสี่ยงต่อ XSS)<br>' +
+            '2. <strong>innerText:</strong> แทนที่เฉพาะข้อความธรรมดา (Plain Text) ไม่แปลแท็ก HTML<br>' +
+            '3. <strong>document.write():</strong> เขียนลงใน Document Stream ขณะหน้าเว็บกำลังโหลด<br>' +
+            '<strong>ข้อควรระวังสำคัญ:</strong> หากเรียกใช้หลังจากหน้าเว็บโหลดเสร็จแล้ว จะ <strong>"ลบเนื้อหาทั้งหน้าเว็บทิ้งทั้งหมด"</strong>',
+            'อ้างอิง Cheat Sheet ส่วนที่ 1: JavaScript Output & Debugging');
+        return;
     }
-});
 
-// ข้อ 2
-document.getElementById('btn2').addEventListener('click', function() {
-    var val = (document.getElementById('ans2').value || '').trim();
-    var a = val.includes('$("#header").html') || val.includes("$('#header').html");
-    var b = val.includes('$(".box").hide') || val.includes("$('.box').hide") || val.includes('.css');
-    var c = val.includes('$("#btnSubmit").click') || val.includes("$('#btnSubmit').click");
+    var hasHtml = text.includes('innerhtml') || text.includes('html') || text.includes('แท็ก') || text.includes('มาร์กอัป');
+    var hasText = text.includes('innertext') || text.includes('text') || text.includes('ข้อความ');
+    var hasWarn = text.includes('ลบ') || text.includes('ทั้งหน้า') || text.includes('โหลดเสร็จ') || text.includes('overwrite');
 
-    var sol = 'a) <code>$("#header").html("&lt;h1&gt;Welcome&lt;/h1&gt;");</code><br>' +
-              'b) <code>$(".box").hide();</code><br>' +
-              'c) <code>$("#btnSubmit").click(doSubmit);</code>';
-    var exp = 'jQuery ใช้ # แทน ID, . แทน Class, .html() แทน innerHTML, .hide() แทน display="none" และ .click() แทน addEventListener';
+    var sol = '1. <strong>innerHTML:</strong> แทนที่เนื้อหาที่มีแท็ก HTML มาร์กอัป (เสี่ยงต่อ XSS)<br>' +
+              '2. <strong>innerText:</strong> แทนที่เฉพาะข้อความธรรมดา (Plain Text) ไม่แปลแท็ก HTML<br>' +
+              '3. <strong>document.write():</strong> เขียนลงใน Document Stream ขณะหน้าเว็บกำลังโหลด<br>' +
+              '<strong>ข้อควรระวังสำคัญ:</strong> หากเรียกใช้หลังจากหน้าเว็บโหลดเสร็จแล้ว จะ <strong>"ลบเนื้อหาทั้งหน้าเว็บทิ้งทั้งหมด"</strong>';
+    var exp = 'อ้างอิง Cheat Sheet ส่วนที่ 1: JavaScript Output & Debugging';
+
+    if (hasHtml && hasText && hasWarn) {
+        displayResult('res1', 'correct', '✓ ถูกต้องสมบูรณ์ (4/4 คะแนน)', sol, exp);
+    } else if (hasHtml || hasText || hasWarn || text.length >= 3) {
+        displayResult('res1', 'partial', '⚠ คำตอบเข้าโครง/เกือบถูกต้อง (ได้คะแนนบางส่วน)', sol, exp);
+    } else {
+        displayResult('res1', 'incorrect', '✗ ไม่ถูกต้อง (0/4 คะแนน)', sol, exp);
+    }
+}
+
+// ข้อ 2: jQuery Syntax
+function checkQ2() {
+    var text = (document.getElementById('q2').value || '').trim();
+    if (!text) {
+        displayResult('res2', 'incorrect', '✗ ไม่ถูกต้อง (0/3 คะแนน)', 
+            'a) <code>$("#demo").html("&lt;b&gt;Hi&lt;/b&gt;");</code><br>' +
+            'b) <code>$(elem).css("color", "red");</code> หรือ <code>$("#demo").css("color", "red");</code><br>' +
+            'c) <code>$(elem).click(fn);</code> หรือ <code>$("#demo").click(fn);</code>',
+            'อ้างอิง Cheat Sheet ส่วนที่ 2: Vanilla JavaScript vs jQuery');
+        return;
+    }
+
+    var a = text.includes('.html(') || text.includes('html(');
+    var b = text.includes('.css(') || text.includes('css(');
+    var c = text.includes('.click(') || text.includes('click(');
+
+    var sol = 'a) <code>$("#demo").html("&lt;b&gt;Hi&lt;/b&gt;");</code><br>' +
+              'b) <code>$(elem).css("color", "red");</code> หรือ <code>$("#demo").css("color", "red");</code><br>' +
+              'c) <code>$(elem).click(fn);</code> หรือ <code>$("#demo").click(fn);</code>';
+    var exp = 'อ้างอิง Cheat Sheet ส่วนที่ 2: Vanilla JavaScript vs jQuery';
 
     var score = (a ? 1 : 0) + (b ? 1 : 0) + (c ? 1 : 0);
     if (score === 3) {
-        renderFeedback('fb2', 'status-correct', '✓ ถูกต้องสมบูรณ์ (3/3 คะแนน)', sol, exp);
-    } else if (score > 0) {
-        renderFeedback('fb2', 'status-partial', '⚠ ถูกต้องบางส่วน (' + score + '/3 คะแนน)', sol, exp);
+        displayResult('res2', 'correct', '✓ ถูกต้องสมบูรณ์ (3/3 คะแนน)', sol, exp);
+    } else if (score >= 1 || text.includes('$') || text.includes('jquery')) {
+        displayResult('res2', 'partial', '⚠ คำตอบเข้าโครง/เกือบถูกต้อง (' + (score > 0 ? score : 1) + '/3 คะแนน)', sol, exp);
     } else {
-        renderFeedback('fb2', 'status-incorrect', '✗ คำตอบไม่ถูกต้อง (0/3 คะแนน)', sol, exp);
+        displayResult('res2', 'incorrect', '✗ ไม่ถูกต้อง (0/3 คะแนน)', sol, exp);
     }
-});
+}
 
-// ข้อ 3
-document.getElementById('btn3').addEventListener('click', function() {
-    var val = (document.getElementById('ans3').value || '').toLowerCase().trim();
-    var hasScope = val.includes('function') || val.includes('block') || val.includes('บล็อก');
-    var hasConst = val.includes('reassign') || val.includes('เปลี่ยน') || val.includes('ค่าคงที่');
-    var hasTDZ = val.includes('tdz') || val.includes('hoist') || val.includes('undefined');
+// ข้อ 3: var vs let vs const
+function checkQ3() {
+    var text = (document.getElementById('q3').value || '').toLowerCase().trim();
+    if (!text) {
+        displayResult('res3', 'incorrect', '✗ ไม่ถูกต้อง (0/4 คะแนน)', 
+            '• <strong>var:</strong> Function Scope | Reassign: ได้ | Redeclare: ได้ | Hoisting: ได้ (undefined)<br>' +
+            '• <strong>let:</strong> Block Scope {} | Reassign: ได้ | Redeclare: ไม่ได้ | Hoisting: ติด TDZ (ห้ามใช้ก่อนประกาศ)<br>' +
+            '• <strong>const:</strong> Block Scope {} | Reassign: ไม่ได้ | Redeclare: ไม่ได้ | Hoisting: ติด TDZ (ห้ามใช้ก่อนประกาศ)',
+            'อ้างอิง Cheat Sheet ส่วนที่ 3: Variables, Scope & Operators');
+        return;
+    }
 
-    var sol = '• <strong>Scope:</strong> var เป็น Function Scope ส่วน let และ const เป็น <strong>Block Scope {}</strong><br>' +
-              '• <strong>Reassign:</strong> var และ let เปลี่ยนค่าได้ แต่ const <strong>ห้ามเปลี่ยนค่า</strong><br>' +
-              '• <strong>Redeclare:</strong> var ประกาศชื่อซ้ำได้ แต่ let และ const <strong>ห้ามประกาศซ้ำ</strong><br>' +
-              '• <strong>Hoisting:</strong> var เรียกก่อนประกาศได้ undefined ส่วน let/const ติด <strong>TDZ</strong>';
-    var exp = 'ES6 แนะนำให้ใช้ let และ const เพื่อตัดปัญหา Scope รั่วและข้อผิดพลาดจาก Hoisting ของ var';
+    var hasScope = text.includes('scope') || text.includes('function') || text.includes('block') || text.includes('บล็อก');
+    var hasConst = text.includes('const') && (text.includes('ไม่ได้') || text.includes('ห้าม') || text.includes('คงที่'));
+    var hasTdz = text.includes('tdz') || text.includes('temporal') || text.includes('undefined') || text.includes('hoist');
 
-    if (hasScope && hasConst && hasTDZ) {
-        renderFeedback('fb3', 'status-correct', '✓ ถูกต้องสมบูรณ์ (4/4 คะแนน)', sol, exp);
-    } else if (hasScope || hasConst) {
-        renderFeedback('fb3', 'status-partial', '⚠ คำตอบเข้าโครง (2/4 คะแนน)', sol, exp);
+    var sol = '• <strong>var:</strong> Function Scope | Reassign: ได้ | Redeclare: ได้ | Hoisting: ได้ (undefined)<br>' +
+              '• <strong>let:</strong> Block Scope {} | Reassign: ได้ | Redeclare: ไม่ได้ | Hoisting: ติด TDZ (ห้ามใช้ก่อนประกาศ)<br>' +
+              '• <strong>const:</strong> Block Scope {} | Reassign: ไม่ได้ | Redeclare: ไม่ได้ | Hoisting: ติด TDZ (ห้ามใช้ก่อนประกาศ)';
+    var exp = 'อ้างอิง Cheat Sheet ส่วนที่ 3: Variables, Scope & Operators';
+
+    if (hasScope && hasConst && hasTdz) {
+        displayResult('res3', 'correct', '✓ ถูกต้องสมบูรณ์ (4/4 คะแนน)', sol, exp);
+    } else if (hasScope || hasConst || hasTdz || text.includes('var') || text.includes('let')) {
+        displayResult('res3', 'partial', '⚠ คำตอบเข้าโครง/เกือบถูกต้อง (ได้คะแนนบางส่วน)', sol, exp);
     } else {
-        renderFeedback('fb3', 'status-incorrect', '✗ คำตอบไม่ถูกต้อง (0/4 คะแนน)', sol, exp);
+        displayResult('res3', 'incorrect', '✗ ไม่ถูกต้อง (0/4 คะแนน)', sol, exp);
     }
-});
+}
 
-// ข้อ 4
-document.getElementById('btn4').addEventListener('click', function() {
-    var val = (document.getElementById('ans4').value || '').toLowerCase().trim();
-    var hasVal = val.includes('ค่า') || val.includes('value');
-    var hasType = val.includes('type') || val.includes('ชนิด') || val.includes('ประเภท');
+// ข้อ 4: == vs ===
+function checkQ4() {
+    var text = (document.getElementById('q4').value || '').toLowerCase().trim();
+    if (!text) {
+        displayResult('res4', 'incorrect', '✗ ไม่ถูกต้อง (0/3 คะแนน)', 
+            '• <code>==</code> (Abstract Equality): เช็คแค่ค่า มีการแปลง Type อัตโนมัติ เช่น <code>5 == "5"</code> ได้ <strong>true</strong><br>' +
+            '• <code>===</code> (Strict Equality): เช็คทั้งค่าและ Data Type โดยไม่แปลง Type เช่น <code>5 === "5"</code> ได้ <strong>false</strong>',
+            'อ้างอิง Cheat Sheet ส่วนที่ 3: Operators ที่ชอบออกสอบ');
+        return;
+    }
 
-    var sol = '• <code>==</code> เปรียบเทียบเฉพาะ "ค่า" โดยมีการแปลง Type อัตโนมัติ เช่น <code>5 == "5"</code> (true)<br>' +
-              '• <code>===</code> เปรียบเทียบทั้ง "ค่า" และ "Data Type" โดยไม่แปลง Type เช่น <code>5 === "5"</code> (false)';
-    var exp = 'W3Schools แนะนำให้ใช้ === เป็นมาตรฐานเพื่อลดข้อผิดพลาดจากการแปลงชนิดข้อมูลอัตโนมัติ';
+    var hasVal = text.includes('ค่า') || text.includes('value');
+    var hasType = text.includes('type') || text.includes('ชนิด');
+    var hasExample = text.includes('true') || text.includes('false');
 
-    if (hasVal && hasType) {
-        renderFeedback('fb4', 'status-correct', '✓ ถูกต้องสมบูรณ์ (3/3 คะแนน)', sol, exp);
-    } else if (hasVal || hasType) {
-        renderFeedback('fb4', 'status-partial', '⚠ คำตอบเข้าโครงแต่ยังไม่ครบ (1.5/3 คะแนน)', sol, exp);
+    var sol = '• <code>==</code> (Abstract Equality): เช็คแค่ค่า มีการแปลง Type อัตโนมัติ เช่น <code>5 == "5"</code> ได้ <strong>true</strong><br>' +
+              '• <code>===</code> (Strict Equality): เช็คทั้งค่าและ Data Type โดยไม่แปลง Type เช่น <code>5 === "5"</code> ได้ <strong>false</strong>';
+    var exp = 'อ้างอิง Cheat Sheet ส่วนที่ 3: Operators ที่ชอบออกสอบ';
+
+    if (hasVal && hasType && hasExample) {
+        displayResult('res4', 'correct', '✓ ถูกต้องสมบูรณ์ (3/3 คะแนน)', sol, exp);
+    } else if (hasVal || hasType || hasExample || text.includes('==')) {
+        displayResult('res4', 'partial', '⚠ คำตอบเข้าโครง/เกือบถูกต้อง (ได้คะแนนบางส่วน)', sol, exp);
     } else {
-        renderFeedback('fb4', 'status-incorrect', '✗ คำตอบไม่ถูกต้อง (0/3 คะแนน)', sol, exp);
+        displayResult('res4', 'incorrect', '✗ ไม่ถูกต้อง (0/3 คะแนน)', sol, exp);
     }
-});
+}
 
-// ข้อ 5
-document.getElementById('btn5').addEventListener('click', function() {
-    var val = (document.getElementById('ans5').value || '').replace(/\s+/g, ' ').trim();
-    var hasInit = val.includes('let i = 0') || val.includes('var i = 0') || val.includes('i=0');
-    var hasWhile = val.includes('while (i < 5)') || val.includes('while(i<5)');
-    var hasInc = val.includes('i++') || val.includes('i += 1');
+// ข้อ 5: For to While Loop
+function checkQ5() {
+    var text = (document.getElementById('q5').value || '').replace(/\s+/g, ' ').trim();
+    if (!text) {
+        displayResult('res5', 'incorrect', '✗ ไม่ถูกต้อง (0/3 คะแนน)', 
+            '<pre style="background:#f8fafc; padding:8px; border-radius:4px; font-family:monospace;">' +
+            'let i = 0;              // 1. Initializer (อยู่นอกลูป)\n' +
+            'while (i &lt; 5) {         // 2. Condition (เงื่อนไขก่อนเข้าลูป)\n' +
+            '    console.log(i);     // 3. Loop Body\n' +
+            '    i++;                // 4. Incrementor (เพิ่มค่าก่อนจบรอบ)\n' +
+            '}' +
+            '</pre>',
+            'อ้างอิง Cheat Sheet ส่วนที่ 4: การแปลง Loop (Initializer, Condition, Incrementor)');
+        return;
+    }
 
-    var sol = '<pre style="background:#f7fafc; padding:8px; border-radius:4px;">' +
-              'let i = 0;             // 1. Initializer\n' +
-              'while (i &lt; 5) {        // 2. Condition\n' +
-              '    console.log(i);    // 3. Loop Body\n' +
-              '    i++;               // 4. Incrementor\n' +
-              '}</pre>';
-    var exp = 'While loop ต้องกำหนดค่าเริ่มต้นก่อนเข้าลูป และเพิ่มค่าภายในบล็อกเพื่อป้องกัน Infinite Loop';
+    var hasInit = text.includes('i = 0') || text.includes('i=0');
+    var hasWhile = text.includes('while') && (text.includes('i < 5') || text.includes('i<5'));
+    var hasInc = text.includes('i++') || text.includes('i += 1') || text.includes('i=i+1');
+
+    var sol = '<pre style="background:#f8fafc; padding:8px; border-radius:4px; font-family:monospace;">' +
+              'let i = 0;              // 1. Initializer (อยู่นอกลูป)\n' +
+              'while (i &lt; 5) {         // 2. Condition (เงื่อนไขก่อนเข้าลูป)\n' +
+              '    console.log(i);     // 3. Loop Body\n' +
+              '    i++;                // 4. Incrementor (เพิ่มค่าก่อนจบรอบ)\n' +
+              '}' +
+              '</pre>';
+    var exp = 'อ้างอิง Cheat Sheet ส่วนที่ 4: การแปลง Loop (Initializer, Condition, Incrementor)';
 
     if (hasInit && hasWhile && hasInc) {
-        renderFeedback('fb5', 'status-correct', '✓ ถูกต้องสมบูรณ์ (3/3 คะแนน)', sol, exp);
-    } else if (hasWhile && (hasInit || hasInc)) {
-        renderFeedback('fb5', 'status-partial', '⚠ โครงสร้างเกือบสมบูรณ์ (1.5/3 คะแนน)', sol, exp);
+        displayResult('res5', 'correct', '✓ ถูกต้องสมบูรณ์ (3/3 คะแนน)', sol, exp);
+    } else if (hasWhile || hasInit || hasInc || text.includes('while')) {
+        displayResult('res5', 'partial', '⚠ คำตอบเข้าโครง/เกือบถูกต้อง (ได้คะแนนบางส่วน)', sol, exp);
     } else {
-        renderFeedback('fb5', 'status-incorrect', '✗ คำตอบไม่ถูกต้อง (0/3 คะแนน)', sol, exp);
+        displayResult('res5', 'incorrect', '✗ ไม่ถูกต้อง (0/3 คะแนน)', sol, exp);
     }
-});
+}
 
-// ข้อ 6
-document.getElementById('btn6').addEventListener('click', function() {
-    var val = (document.getElementById('ans6').value || '').toLowerCase().trim();
-    var hasUndef = val.includes('undefined');
-    var hasStop = val.includes('หยุด') || val.includes('ออก') || val.includes('สิ้นสุด') || val.includes('stop');
+// ข้อ 6: Functions & Return
+function checkQ6() {
+    var text = (document.getElementById('q6').value || '').toLowerCase().trim();
+    if (!text) {
+        displayResult('res6', 'incorrect', '✗ ไม่ถูกต้อง (0/3 คะแนน)', 
+            '1. หากฟังก์ชันไม่มีคำสั่ง return หรือเรียก return; เปล่าๆ ค่าที่คืนกลับมาจะเป็น <strong>undefined</strong> เสมอ<br>' +
+            '2. คำสั่ง return จะทำหน้าที่ <strong>ส่งผลลัพธ์และหยุดการทำงานของฟังก์ชันทันที</strong> คำสั่งที่อยู่ด้านล่างจะไม่ถูกประมวลผล',
+            'อ้างอิง Cheat Sheet ส่วนที่ 5: Functions, Parameters & Return');
+        return;
+    }
 
-    var sol = '1. หากไม่มีคำสั่ง return หรือเรียกแค่ return; จะคืนค่าเป็น <strong>undefined</strong> เสมอ<br>' +
-              '2. คำสั่ง return จะทำการ <strong>หยุดการทำงานของฟังก์ชันทันที</strong> คำสั่งที่อยู่ด้านล่างจะไม่ถูกประมวลผล';
-    var exp = 'return ทำหน้าที่ส่งค่ากลับและกระโดดออกจากฟังก์ชันทันที';
+    var hasUndef = text.includes('undefined');
+    var hasStop = text.includes('หยุด') || text.includes('ออก') || text.includes('สิ้นสุด') || text.includes('stop');
+
+    var sol = '1. หากฟังก์ชันไม่มีคำสั่ง return หรือเรียก return; เปล่าๆ ค่าที่คืนกลับมาจะเป็น <strong>undefined</strong> เสมอ<br>' +
+              '2. คำสั่ง return จะทำหน้าที่ <strong>ส่งผลลัพธ์และหยุดการทำงานของฟังก์ชันทันที</strong> คำสั่งที่อยู่ด้านล่างจะไม่ถูกประมวลผล';
+    var exp = 'อ้างอิง Cheat Sheet ส่วนที่ 5: Functions, Parameters & Return';
 
     if (hasUndef && hasStop) {
-        renderFeedback('fb6', 'status-correct', '✓ ถูกต้องสมบูรณ์ (3/3 คะแนน)', sol, exp);
-    } else if (hasUndef || hasStop) {
-        renderFeedback('fb6', 'status-partial', '⚠ ตอบถูกหนึ่งประเด็น (1.5/3 คะแนน)', sol, exp);
+        displayResult('res6', 'correct', '✓ ถูกต้องสมบูรณ์ (3/3 คะแนน)', sol, exp);
+    } else if (hasUndef || hasStop || text.includes('return')) {
+        displayResult('res6', 'partial', '⚠ คำตอบเข้าโครง/เกือบถูกต้อง (ได้คะแนนบางส่วน)', sol, exp);
     } else {
-        renderFeedback('fb6', 'status-incorrect', '✗ คำตอบไม่ถูกต้อง (0/3 คะแนน)', sol, exp);
+        displayResult('res6', 'incorrect', '✗ ไม่ถูกต้อง (0/3 คะแนน)', sol, exp);
     }
-});
+}
 
-// ข้อ 7
-document.getElementById('btn7').addEventListener('click', function() {
-    var val = (document.getElementById('ans7').value || '').toLowerCase().trim();
-    var hasSplice = val.includes('splice') && (val.includes('เดิม') || val.includes('แก้') || val.includes('mutate'));
-    var hasSlice = val.includes('slice') && (val.includes('ใหม่') || val.includes('ไม่แก้') || val.includes('copy'));
-    var hasMonth = val.includes('0') || val.includes('zero') || val.includes('0-11');
+// ข้อ 7: Array (splice vs slice) & Date.getMonth()
+function checkQ7() {
+    var text = (document.getElementById('q7').value || '').toLowerCase().trim();
+    if (!text) {
+        displayResult('res7', 'incorrect', '✗ ไม่ถูกต้อง (0/3 คะแนน)', 
+            '• <strong>splice():</strong> ลบหรือแทรกข้อมูลตามตำแหน่ง โดยมีผล <strong>แก้ไข Array เดิมโดยตรง (Mutate)</strong><br>' +
+            '• <strong>slice():</strong> คัดลอกชิ้นส่วน Array ออกมาเป็น <strong>Array ใหม่ (ไม่แก้ไข Array เดิม)</strong><br>' +
+            '• <strong>ข้อควรระวังของ getMonth():</strong> ค่าเดือนนับแบบ 0-Indexed คือ <strong>0 = มกราคม ถึง 11 = ธันวาคม</strong>',
+            'อ้างอิง Cheat Sheet ส่วนที่ 6: Standard Objects & Built-ins');
+        return;
+    }
 
-    var sol = '• <strong>splice():</strong> ลบหรือแทรกสมาชิก โดยมีผล <strong>แก้ไข Array เดิมโดยตรง (Mutate)</strong><br>' +
-              '• <strong>slice():</strong> คัดลอกสมาชิกบางส่วนออกมาเป็น <strong>Array ตัวใหม่ (ไม่กระทบของเดิม)</strong><br>' +
-              '• <strong>getMonth():</strong> เป็นแบบ 0-indexed (0 = ม.ค. ถึง 11 = ธ.ค.) ต้องบวก 1 เสมอ';
-    var exp = 'ข้อสอบชอบลวงเรื่อง splice แก้ array เดิม แต่ slice ได้ array ใหม่ และการนับเดือนเริ่มที่ 0';
+    var hasMutate = text.includes('splice') || text.includes('เดิม') || text.includes('แก้ไข') || text.includes('mutate');
+    var hasCopy = text.includes('slice') || text.includes('ใหม่') || text.includes('คัดลอก');
+    var hasMonth = text.includes('0') || text.includes('zero') || text.includes('0-11') || text.includes('11');
 
-    if ((hasSplice || hasSlice) && hasMonth) {
-        renderFeedback('fb7', 'status-correct', '✓ ถูกต้องสมบูรณ์ (3/3 คะแนน)', sol, exp);
-    } else if (hasMonth || hasSplice || hasSlice) {
-        renderFeedback('fb7', 'status-partial', '⚠ ตอบถูกบางส่วน (1.5/3 คะแนน)', sol, exp);
+    var sol = '• <strong>splice():</strong> ลบหรือแทรกข้อมูลตามตำแหน่ง โดยมีผล <strong>แก้ไข Array เดิมโดยตรง (Mutate)</strong><br>' +
+              '• <strong>slice():</strong> คัดลอกชิ้นส่วน Array ออกมาเป็น <strong>Array ใหม่ (ไม่แก้ไข Array เดิม)</strong><br>' +
+              '• <strong>ข้อควรระวังของ getMonth():</strong> ค่าเดือนนับแบบ 0-Indexed คือ <strong>0 = มกราคม ถึง 11 = ธันวาคม</strong>';
+    var exp = 'อ้างอิง Cheat Sheet ส่วนที่ 6: Standard Objects & Built-ins';
+
+    if (hasMutate && hasCopy && hasMonth) {
+        displayResult('res7', 'correct', '✓ ถูกต้องสมบูรณ์ (3/3 คะแนน)', sol, exp);
+    } else if (hasMutate || hasCopy || hasMonth || text.includes('array') || text.includes('month')) {
+        displayResult('res7', 'partial', '⚠ คำตอบเข้าโครง/เกือบถูกต้อง (ได้คะแนนบางส่วน)', sol, exp);
     } else {
-        renderFeedback('fb7', 'status-incorrect', '✗ คำตอบไม่ถูกต้อง (0/3 คะแนน)', sol, exp);
+        displayResult('res7', 'incorrect', '✗ ไม่ถูกต้อง (0/3 คะแนน)', sol, exp);
     }
-});
+}
 
-// ข้อ 8
-document.getElementById('btn8').addEventListener('click', function() {
-    var val = (document.getElementById('ans8').value || '').toLowerCase().trim();
-    var hasFormula = val.includes('math.floor') && val.includes('math.random') && val.includes('max - min + 1');
-    var hasJSON = val.includes('parse') && val.includes('stringify');
+// ข้อ 8: Math.random() & JSON
+function checkQ8() {
+    var text = (document.getElementById('q8').value || '').toLowerCase().trim();
+    if (!text) {
+        displayResult('res8', 'incorrect', '✗ ไม่ถูกต้อง (0/3 คะแนน)', 
+            '• <strong>สูตรสุ่มเลขจำนวนเต็มช่วง min ถึง max:</strong><br>' +
+            '<code>Math.floor(Math.random() * (max - min + 1)) + min;</code><br><br>' +
+            '• <strong>JSON.parse():</strong> แปลง JSON String ให้กลายเป็น JavaScript Object<br>' +
+            '• <strong>JSON.stringify():</strong> แปลง JavaScript Object ให้กลายเป็น JSON String',
+            'อ้างอิง Cheat Sheet ส่วนที่ 6: Math และ JSON Objects');
+        return;
+    }
 
-    var sol = '• <strong>สูตรสุ่มตัวเลข min ถึง max:</strong><br>' +
+    var hasMath = text.includes('math.floor') || text.includes('math.random') || text.includes('max - min + 1') || text.includes('max-min+1');
+    var hasJson = text.includes('parse') || text.includes('stringify') || text.includes('object') || text.includes('string');
+
+    var sol = '• <strong>สูตรสุ่มเลขจำนวนเต็มช่วง min ถึง max:</strong><br>' +
               '<code>Math.floor(Math.random() * (max - min + 1)) + min;</code><br><br>' +
-              '• <strong>JSON.parse():</strong> แปลง String เป็น Object<br>' +
-              '• <strong>JSON.stringify():</strong> แปลง Object เป็น String';
-    var exp = 'สูตรสุ่มเลขและคำสั่งแปลง JSON เป็นโจทย์ข้อเขียนยอดนิยมของ W3Schools';
+              '• <strong>JSON.parse():</strong> แปลง JSON String ให้กลายเป็น JavaScript Object<br>' +
+              '• <strong>JSON.stringify():</strong> แปลง JavaScript Object ให้กลายเป็น JSON String';
+    var exp = 'อ้างอิง Cheat Sheet ส่วนที่ 6: Math และ JSON Objects';
 
-    if (hasFormula && hasJSON) {
-        renderFeedback('fb8', 'status-correct', '✓ ถูกต้องสมบูรณ์ (3/3 คะแนน)', sol, exp);
-    } else if (hasFormula || hasJSON) {
-        renderFeedback('fb8', 'status-partial', '⚠ ตอบถูกบางส่วน (1.5/3 คะแนน)', sol, exp);
+    if (hasMath && hasJson) {
+        displayResult('res8', 'correct', '✓ ถูกต้องสมบูรณ์ (3/3 คะแนน)', sol, exp);
+    } else if (hasMath || hasJson || text.includes('random') || text.includes('json')) {
+        displayResult('res8', 'partial', '⚠ คำตอบเข้าโครง/เกือบถูกต้อง (ได้คะแนนบางส่วน)', sol, exp);
     } else {
-        renderFeedback('fb8', 'status-incorrect', '✗ คำตอบไม่ถูกต้อง (0/3 คะแนน)', sol, exp);
+        displayResult('res8', 'incorrect', '✗ ไม่ถูกต้อง (0/3 คะแนน)', sol, exp);
     }
-});
+}
 </script>
 
 </body>
